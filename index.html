@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I Miss You</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #1a0a0f;
+      font-family: Georgia, serif;
+      color: #f5e6ea;
+      overflow-x: hidden;
+    }
+
+    /* ── FLOATING HEARTS BACKGROUND ── */
+    .hearts-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .heart-particle {
+      position: absolute;
+      bottom: -60px;
+      animation: floatUp linear infinite;
+      opacity: 0.12;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0.12; }
+      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* Hero banner photo */
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(249, 198, 208, 0.2);
+      background: #2a1018;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    /* Memory grid photos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+    .photo-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(249, 198, 208, 0.18);
+      background: #2a1018;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    /* Closing photo */
+    .closing-photo {
+      width: 100%;
+      aspect-ratio: 3 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(249, 198, 208, 0.18);
+      background: #2a1018;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .closing-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    /* ── HEADER ── */
+    .header { text-align: center; margin-bottom: 2rem; }
+    .big-heart {
+      font-size: 64px;
+      display: block;
+      margin-bottom: 1rem;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.12); }
+    }
+    h1 {
+      font-size: 2.6rem;
+      font-weight: normal;
+      color: #f9c6d0;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: #c9909a;
+      font-style: italic;
+    }
+
+    /* ── LETTER CARD ── */
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(249, 198, 208, 0.18);
+      border-radius: 16px;
+      padding: 2rem 2.2rem;
+      margin-bottom: 2rem;
+      line-height: 1.9;
+      color: #f0d6db;
+      font-size: 1.05rem;
+    }
+    .card p + p { margin-top: 1rem; }
+
+    /* ── MEMORIES LABEL ── */
+    .memories-title {
+      text-align: center;
+      color: #f9c6d0;
+      font-size: 0.95rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    /* ── REASONS LIST ── */
+    .reasons {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(249, 198, 208, 0.14);
+      border-radius: 16px;
+      padding: 1.8rem 2.2rem;
+      margin-bottom: 2rem;
+    }
+    .reasons h2 {
+      color: #f9c6d0;
+      font-size: 1rem;
+      font-weight: normal;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .reason-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+      color: #f0d6db;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── PROMISE SECTION ── */
+    .promise {
+      background: rgba(249, 198, 208, 0.07);
+      border: 1px solid rgba(249, 198, 208, 0.22);
+      border-radius: 16px;
+      padding: 1.8rem 2.2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .promise h2 {
+      color: #f9c6d0;
+      font-size: 1rem;
+      font-weight: normal;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .promise p {
+      color: #f0d6db;
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+
+    /* ── BUTTON ── */
+    .btn {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 1rem;
+      padding: 0.9rem 2.5rem;
+      background: #c2596a;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover { background: #a83f50; transform: scale(1.03); }
+
+    /* ── FOOTER ── */
+    .footer-note {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #80505a;
+      font-style: italic;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts-bg" id="heartsContainer"></div>
+
+  <div class="page">
+
+    <div class="hero-photo">
+      <video
+        src="hero_video.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+        style="width:100%;height:100%;object-fit:cover;display:block;">
+      </video>
+    </div>
+
+    <div class="header">
+      <span class="big-heart">❤️</span>
+      <h1>I miss you, I miss us.</h1>
+      <p class="subtitle">I hope you appreciate this!.</p>
+    </div>
+
+    <div class="card">
+      <p>I've been constantly thinking about the queen ever since she blocked me! Everytime I look in my photos I see the folder I made with our minidates and I get to missing even more. I miss hearing you talk about your day and everything you have going on. I miss hearing you complain about every bs that irritates you! I miss not being able to see you! and I miss not trying to make the queen happy!</p>
+      <p>I know we've been arguing alot and that's genuinely draining for both of us but I wanna talk to you! I'm attached and I don't want you to detach. But you deserve to know how genuinely sorry I am even though i've been apologizing alot recently, and how much I care about YOU!!! I'm not expecting you to want to come back or talk to me, but hear me out queen!</p>
+    </div>
+
+    <p class="memories-title">📸 US!!!!</p>
+
+    <div class="photo-grid">
+      <div class="photo-cell"><img src="memory1.jpeg" alt="memory"></div>
+      <div class="photo-cell"><img src="memory2.jpeg" alt="memory"></div>
+      <div class="photo-cell"><img src="memory3.jpeg" alt="memory"></div>
+      <div class="photo-cell"><img src="memory4.jpeg" alt="memory"></div>
+      <div class="photo-cell"><img src="memory5.jpeg" alt="memory"></div>
+      <div class="photo-cell"><img src="memory6.jpeg" alt="memory"></div>
+    </div>
+
+    <div class="reasons">
+      <h2>Things I miss about THE QUEEN!!</h2>
+      <div class="reason-item"><span>-</span><span>You laughing! You are hilarious. I love making you laugh and I love when you make me laugh. I miss it.</span></div>
+      <div class="reason-item"><span>-</span><span>Staying up late with you! I gts early when your not here, I swr I complain but I LOVE it. Watching wtv or hearing you yap on the phone. I LOVE AND APPRECIATE IT SO MUCH.</span></div>
+      <div class="reason-item"><span>-</span><span>The random adventures we go on. ANYTHING with you is amazing! Idc what we're doing half the time as long as I get to see you i'm down.</span></div>
+      <div class="reason-item"><span>-</span><span>You're the queen, do i need to say how good you look always or wk this? bcz you're the prize, i see you as the prize. i never see anyone as the prize, i am losing it. please come back!!!</span></div>
+      <div class="reason-item"><span>-</span><span>Every memory made with you. Let's please make some more.</span></div>
+    </div>
+
+    <div class="closing-photo">
+      <img src="closing_photo.jpeg" alt="us">
+    </div>
+
+    <div class="promise">
+      <h2>HAPPY QUEEN!</h2>
+      <p>I swear I'll communicate better, do better, be better and be less draining!</p>
+    </div>
+
+    <a class="btn" href="https://www.instagram.com/1julixn_/#" target="_blank">💌 &nbsp; Talk to me</a>
+
+    <p class="footer-note">Made just for you.</p>
+
+  </div>
+
+  <script>
+    const container = document.getElementById('heartsContainer');
+    const emojis = ['❤️', '🌹', '💕', '✨', '💗', '🌸'];
+    for (let i = 0; i < 20; i++) {
+      const h = document.createElement('div');
+      h.className = 'heart-particle';
+      h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      h.style.left              = Math.random() * 100 + '%';
+      h.style.fontSize          = (13 + Math.random() * 18) + 'px';
+      h.style.animationDuration = (8  + Math.random() * 12) + 's';
+      h.style.animationDelay    = (Math.random() * 10) + 's';
+      container.appendChild(h);
+    }
+  </script>
+
+</body>
+</html>
